@@ -19,6 +19,7 @@
 		186F98F91BB13CD500485D88 /* DMPhotoThumbsPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 186F98F81BB13CD500485D88 /* DMPhotoThumbsPhotoCell.xib */; };
 		186F98FD1BB13F3000485D88 /* DMPhotoThumbsVizorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F98FB1BB13F3000485D88 /* DMPhotoThumbsVizorCell.m */; };
 		186F98FE1BB13F3000485D88 /* DMPhotoThumbsVizorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 186F98FC1BB13F3000485D88 /* DMPhotoThumbsVizorCell.xib */; };
+		186F99001BB1470100485D88 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186F98FF1BB1470100485D88 /* AssetsLibrary.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		186F98FA1BB13F3000485D88 /* DMPhotoThumbsVizorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMPhotoThumbsVizorCell.h; sourceTree = "<group>"; };
 		186F98FB1BB13F3000485D88 /* DMPhotoThumbsVizorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMPhotoThumbsVizorCell.m; sourceTree = "<group>"; };
 		186F98FC1BB13F3000485D88 /* DMPhotoThumbsVizorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMPhotoThumbsVizorCell.xib; sourceTree = "<group>"; };
+		186F98FF1BB1470100485D88 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				186F99001BB1470100485D88 /* AssetsLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +61,7 @@
 		186F98AC1BB1343500485D88 = {
 			isa = PBXGroup;
 			children = (
+				186F98FF1BB1470100485D88 /* AssetsLibrary.framework */,
 				186F98DE1BB134DF00485D88 /* classes */,
 				186F98B71BB1343500485D88 /* DMPhotoThumbs */,
 				186F98B61BB1343500485D88 /* Products */,

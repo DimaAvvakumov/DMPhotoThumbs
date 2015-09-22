@@ -8,6 +8,8 @@
 
 #import "DMPhotoThumbs.h"
 
+#import <AssetsLibrary/AssetsLibrary.h>
+
 #import "DMPhotoThumbsPhotoCell.h"
 #import "DMPhotoThumbsVizorCell.h"
 
@@ -67,9 +69,41 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"DMPhotoThumbsVizorCell" bundle:nil] forCellWithReuseIdentifier:DMPhotoThumbsVizorCell_ID];
     
     // dummy
-    [self dummyData];
+    [self prepareDataItems];
     [self.collectionView reloadData];
 }
+
+- (void)appendCollectionView {
+    //frame
+    CGRect frame = CGRectMake(0.0, 0.0, self.bounds.size.width, self.bounds.size.height);
+    
+    // layout
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    
+    // create
+    UICollectionView *collecitonView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
+    collecitonView.backgroundColor = [UIColor clearColor];
+    collecitonView.translatesAutoresizingMaskIntoConstraints = NO;
+    collecitonView.delegate = self;
+    collecitonView.dataSource = self;
+    collecitonView.contentInset = self.itemsInsets;
+    collecitonView.showsHorizontalScrollIndicator = NO;
+    
+    // store
+    self.collectionView = collecitonView;
+    
+    // add to scene
+    [self addSubview:collecitonView];
+    
+    // add constraints
+    NSDictionary *views = @{ @"view" : collecitonView };
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|" options:0 metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:views]];
+
+}
+
+#pragma mark - Data items
 
 - (void)dummyData {
     NSMutableArray *dataItems = [NSMutableArray arrayWithCapacity:10];
@@ -90,33 +124,32 @@
     self.dataItems = dataItems;
 }
 
-- (void)appendCollectionView {
-    //frame
-    CGRect frame = CGRectMake(0.0, 0.0, self.bounds.size.width, self.bounds.size.height);
+- (void)prepareDataItems {
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
-    // layout
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    
-    // create
-    UICollectionView *collecitonView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
-    collecitonView.backgroundColor = [UIColor clearColor];
-    collecitonView.translatesAutoresizingMaskIntoConstraints = NO;
-    collecitonView.delegate = self;
-    collecitonView.dataSource = self;
-    collecitonView.contentInset = self.itemsInsets;
-    
-    // store
-    self.collectionView = collecitonView;
-    
-    // add to scene
-    [self addSubview:collecitonView];
-    
-    // add constraints
-    NSDictionary *views = @{ @"view" : collecitonView };
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|" options:0 metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:views]];
-
+    [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+        if (group == nil) return ;
+        
+        NSMutableArray *items = [NSMutableArray arrayWithCapacity:10];
+        
+        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+            if (result == nil) return ;
+            if (index == 20) *stop = YES;
+            
+            DMPhotoThumbsModel *model = [[DMPhotoThumbsModel alloc] init];
+            UIImage *image = [UIImage imageWithCGImage: result.thumbnail];
+            model.image = image;
+            
+            [items addObject:model];
+        }];
+        
+        self.dataItems = items;
+        [self.collectionView reloadData];
+        
+    } failureBlock:^(NSError *error) {
+        
+        NSLog(@"enumerate error: %@", error);
+    }];
 }
 
 #pragma mark - Layout setup

@@ -6,10 +6,11 @@
 //  Copyright (c) 2015 Dmitry Avvakumov. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface DMPhotoThumbsModel : NSObject
 
 @property (nonatomic, strong) NSString *filePath;
+@property (nonatomic, strong) UIImage *image;
 
 @end

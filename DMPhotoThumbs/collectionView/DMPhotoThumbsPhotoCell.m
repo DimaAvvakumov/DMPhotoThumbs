@@ -17,7 +17,7 @@
 @implementation DMPhotoThumbsPhotoCell
 
 - (void) updateCellWithModel:(DMPhotoThumbsModel *)model {
-    
+    self.imageView.image = model.image;
 }
 
 @end
