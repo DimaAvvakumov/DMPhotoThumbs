@@ -8,10 +8,25 @@
 
 #import "DMPhotoThumbsVizorCell.h"
 
+#import <AVFoundation/AVFoundation.h>
+
+#import "DMPhotoThumbsPreviewView.h"
+
+@interface DMPhotoThumbsVizorCell()
+
+@property (weak, nonatomic) IBOutlet DMPhotoThumbsPreviewView *previewView;
+
+@end
+
 @implementation DMPhotoThumbsVizorCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    
 }
+
+- (void)setSession:(AVCaptureSession *)session {
+    [self.previewView setSession:session];
+}
+
 
 @end
