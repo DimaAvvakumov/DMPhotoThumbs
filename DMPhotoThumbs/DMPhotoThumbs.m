@@ -25,6 +25,9 @@
 @property (nonatomic) dispatch_queue_t sessionQueue;
 
 @property (strong, nonatomic) AVCaptureSession *captureSession;
+@property (nonatomic) AVCaptureDeviceInput *videoDeviceInput;
+@property (nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
+@property (nonatomic) AVCaptureStillImageOutput *stillImageOutput;
 @property (assign, nonatomic) BOOL deviceAuthorized;
 
 @end
@@ -76,10 +79,44 @@
     
     // prepare preview cell
     [self preparePreviewCell];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subjectAreaDidChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:[[self videoDeviceInput] device]];
     
     // data items
     [self prepareDataItems];
     [self.collectionView reloadData];
+}
+
+- (void)subjectAreaDidChange:(NSNotification *)notification {
+    CGPoint devicePoint = CGPointMake(.5, .5);
+    [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:NO];
+}
+
+#pragma mark Device Configuration
+
+- (void)focusWithMode:(AVCaptureFocusMode)focusMode exposeWithMode:(AVCaptureExposureMode)exposureMode atDevicePoint:(CGPoint)point monitorSubjectAreaChange:(BOOL)monitorSubjectAreaChange {
+    dispatch_async([self sessionQueue], ^{
+        AVCaptureDevice *device = [[self videoDeviceInput] device];
+        NSError *error = nil;
+        if ([device lockForConfiguration:&error])
+        {
+            if ([device isFocusPointOfInterestSupported] && [device isFocusModeSupported:focusMode])
+            {
+                [device setFocusMode:focusMode];
+                [device setFocusPointOfInterest:point];
+            }
+            if ([device isExposurePointOfInterestSupported] && [device isExposureModeSupported:exposureMode])
+            {
+                [device setExposureMode:exposureMode];
+                [device setExposurePointOfInterest:point];
+            }
+            [device setSubjectAreaChangeMonitoringEnabled:monitorSubjectAreaChange];
+            [device unlockForConfiguration];
+        }
+        else
+        {
+            NSLog(@"%@", error);
+        }
+    });
 }
 
 - (void)appendCollectionView {
@@ -146,7 +183,7 @@
         
         if ([session canAddInput:videoDeviceInput]) {
             [session addInput:videoDeviceInput];
-            // [self setVideoDeviceInput:videoDeviceInput];
+            [self setVideoDeviceInput:videoDeviceInput];
             
 //            dispatch_async(dispatch_get_main_queue(), ^{
 //                // Why are we dispatching this to the main queue?
@@ -157,7 +194,31 @@
 //                [[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] setVideoOrientation:(AVCaptureVideoOrientation)interfaceOrientation];
 //            });
         }
+        
+        AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
+        if ([session canAddOutput:movieFileOutput]) {
+            [session addOutput:movieFileOutput];
+            AVCaptureConnection *connection = [movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
+            if ([connection isVideoStabilizationSupported]) {
+                if ([connection respondsToSelector:@selector(setPreferredVideoStabilizationMode:)]) {
+                    connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeStandard;
+                } else {
+                    [connection setEnablesVideoStabilizationWhenAvailable:YES];
+                }
+            }
+            [self setMovieFileOutput:movieFileOutput];
+        }
+
+        AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+        if ([session canAddOutput:stillImageOutput]) {
+            [stillImageOutput setOutputSettings:@{AVVideoCodecKey : AVVideoCodecJPEG}];
+            [session addOutput:stillImageOutput];
+            [self setStillImageOutput:stillImageOutput];
+        }
+        
     });
+    
+    
 }
 
 - (AVCaptureDevice *)deviceWithMediaType:(NSString *)mediaType preferringPosition:(AVCaptureDevicePosition)position {

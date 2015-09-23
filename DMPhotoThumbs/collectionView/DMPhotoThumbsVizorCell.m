@@ -26,6 +26,10 @@
 
 - (void)setSession:(AVCaptureSession *)session {
     [self.previewView setSession:session];
+    
+    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    [[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] setVideoOrientation:(AVCaptureVideoOrientation)interfaceOrientation];
+
 }
 
 
