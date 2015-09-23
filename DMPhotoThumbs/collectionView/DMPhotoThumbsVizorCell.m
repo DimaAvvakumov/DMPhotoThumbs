@@ -10,26 +10,135 @@
 
 #import <AVFoundation/AVFoundation.h>
 
-#import "DMPhotoThumbsPreviewView.h"
-
 @interface DMPhotoThumbsVizorCell()
 
-@property (weak, nonatomic) IBOutlet DMPhotoThumbsPreviewView *previewView;
+@property (weak, nonatomic) IBOutlet UIView *previewView;
+
+@property (nonatomic) dispatch_queue_t sessionQueue;
+
+@property (strong, nonatomic) AVCaptureSession *captureSession;
+@property (nonatomic) AVCaptureDeviceInput *videoDeviceInput;
+@property (nonatomic) AVCaptureMovieFileOutput *movieFileOutput;
+@property (nonatomic) AVCaptureStillImageOutput *stillImageOutput;
+@property (assign, nonatomic) BOOL deviceAuthorized;
 
 @end
 
 @implementation DMPhotoThumbsVizorCell
 
 - (void)awakeFromNib {
+    // Create the AVCaptureSession
+    AVCaptureSession *session = [[AVCaptureSession alloc] init];
+    self.captureSession = session;
     
+    // Setup the preview view
+    // [[self previewView] setSession:session];
+    
+    // Check for device authorization
+    [self checkDeviceAuthorizationStatus];
+    
+    // In general it is not safe to mutate an AVCaptureSession or any of its inputs, outputs, or connections from multiple threads at the same time.
+    // Why not do all of this on the main queue?
+    // -[AVCaptureSession startRunning] is a blocking call which can take a long time. We dispatch session setup to the sessionQueue so that the main queue isn't blocked (which keeps the UI responsive).
+    
+    // create layer
+    AVCaptureVideoPreviewLayer *previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
+    UIView *previewView = self.previewView;
+    previewLayer.frame = previewView.bounds; // Assume you want the preview layer to fill the view.
+    previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    [previewView.layer addSublayer:previewLayer];
+    
+    dispatch_queue_t sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
+    [self setSessionQueue:sessionQueue];
+    
+    dispatch_async(sessionQueue, ^{
+        NSError *error = nil;
+        
+        AVCaptureDevice *videoDevice = [self deviceWithMediaType:AVMediaTypeVideo preferringPosition:AVCaptureDevicePositionBack];
+        AVCaptureDeviceInput *videoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
+        
+        if (error) {
+            NSLog(@"%@", error);
+            
+            return ;
+        }
+        
+        if ([session canAddInput:videoDeviceInput]) {
+            [session addInput:videoDeviceInput];
+            [self setVideoDeviceInput:videoDeviceInput];
+            
+            //            dispatch_async(dispatch_get_main_queue(), ^{
+            //                // Why are we dispatching this to the main queue?
+            //                // Because AVCaptureVideoPreviewLayer is the backing layer for AVCamPreviewView and UIView can only be manipulated on main thread.
+            //                // Note: As an exception to the above rule, it is not necessary to serialize video orientation changes on the AVCaptureVideoPreviewLayer’s connection with other session manipulation.
+            //
+            //                UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+            //                [[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] setVideoOrientation:(AVCaptureVideoOrientation)interfaceOrientation];
+            //            });
+        }
+        
+        AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
+        if ([session canAddOutput:movieFileOutput]) {
+            [session addOutput:movieFileOutput];
+            AVCaptureConnection *connection = [movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
+            if ([connection isVideoStabilizationSupported]) {
+                if ([connection respondsToSelector:@selector(setPreferredVideoStabilizationMode:)]) {
+                    connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeStandard;
+                } else {
+                    [connection setEnablesVideoStabilizationWhenAvailable:YES];
+                }
+            }
+            [self setMovieFileOutput:movieFileOutput];
+        }
+        
+        AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+        if ([session canAddOutput:stillImageOutput]) {
+            [stillImageOutput setOutputSettings:@{AVVideoCodecKey : AVVideoCodecJPEG}];
+            [session addOutput:stillImageOutput];
+            [self setStillImageOutput:stillImageOutput];
+        }
+        
+        [session startRunning];
+        
+    });
 }
 
-- (void)setSession:(AVCaptureSession *)session {
-    [self.previewView setSession:session];
+- (AVCaptureDevice *)deviceWithMediaType:(NSString *)mediaType preferringPosition:(AVCaptureDevicePosition)position {
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:mediaType];
+    AVCaptureDevice *captureDevice = [devices firstObject];
     
-    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-    [[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] setVideoOrientation:(AVCaptureVideoOrientation)interfaceOrientation];
+    for (AVCaptureDevice *device in devices)
+    {
+        if ([device position] == position)
+        {
+            captureDevice = device;
+            break;
+        }
+    }
+    
+    return captureDevice;
+}
 
+- (void)checkDeviceAuthorizationStatus {
+    NSString *mediaType = AVMediaTypeVideo;
+    
+    [AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
+        if (granted) {
+            //Granted access to mediaType
+            [self setDeviceAuthorized:YES];
+        } else {
+            
+            //Not granted access to mediaType
+            dispatch_async(dispatch_get_main_queue(), ^{
+//                [[[UIAlertView alloc] initWithTitle:@"Warning!"
+//                                            message:@"App doesn't have permission to use Camera, please change privacy settings"
+//                                           delegate:self
+//                                  cancelButtonTitle:@"OK"
+//                                  otherButtonTitles:nil] show];
+                [self setDeviceAuthorized:NO];
+            });
+        }
+    }];
 }
 
 

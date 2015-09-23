@@ -21,7 +21,6 @@
 		186F98FE1BB13F3000485D88 /* DMPhotoThumbsVizorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 186F98FC1BB13F3000485D88 /* DMPhotoThumbsVizorCell.xib */; };
 		186F99001BB1470100485D88 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186F98FF1BB1470100485D88 /* AssetsLibrary.framework */; };
 		188C3EB61BB1641700B0A559 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188C3EB51BB1641700B0A559 /* AVFoundation.framework */; };
-		188C3EB91BB166F800B0A559 /* DMPhotoThumbsPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C3EB81BB166F800B0A559 /* DMPhotoThumbsPreviewView.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,8 +46,6 @@
 		186F98FC1BB13F3000485D88 /* DMPhotoThumbsVizorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMPhotoThumbsVizorCell.xib; sourceTree = "<group>"; };
 		186F98FF1BB1470100485D88 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		188C3EB51BB1641700B0A559 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		188C3EB71BB166F800B0A559 /* DMPhotoThumbsPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMPhotoThumbsPreviewView.h; sourceTree = "<group>"; };
-		188C3EB81BB166F800B0A559 /* DMPhotoThumbsPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMPhotoThumbsPreviewView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,8 +117,6 @@
 				186F98FA1BB13F3000485D88 /* DMPhotoThumbsVizorCell.h */,
 				186F98FB1BB13F3000485D88 /* DMPhotoThumbsVizorCell.m */,
 				186F98FC1BB13F3000485D88 /* DMPhotoThumbsVizorCell.xib */,
-				188C3EB71BB166F800B0A559 /* DMPhotoThumbsPreviewView.h */,
-				188C3EB81BB166F800B0A559 /* DMPhotoThumbsPreviewView.m */,
 			);
 			path = collectionView;
 			sourceTree = "<group>";
@@ -198,7 +193,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				188C3EB91BB166F800B0A559 /* DMPhotoThumbsPreviewView.m in Sources */,
 				186F98F41BB13C2300485D88 /* DMPhotoThumbsModel.m in Sources */,
 				186F98FD1BB13F3000485D88 /* DMPhotoThumbsVizorCell.m in Sources */,
 				186F98F01BB135B400485D88 /* DMPhotoThumbs.m in Sources */,

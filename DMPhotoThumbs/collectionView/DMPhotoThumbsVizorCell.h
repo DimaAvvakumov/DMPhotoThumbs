@@ -10,10 +10,6 @@
 
 #define DMPhotoThumbsVizorCell_ID @"DMPhotoThumbsVizorCell_ID"
 
-@class AVCaptureSession;
-
 @interface DMPhotoThumbsVizorCell : UICollectionViewCell
-
-@property (nonatomic) AVCaptureSession *session;
 
 @end
