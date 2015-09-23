@@ -66,38 +66,8 @@
         if ([session canAddInput:videoDeviceInput]) {
             [session addInput:videoDeviceInput];
             [self setVideoDeviceInput:videoDeviceInput];
-            
-            //            dispatch_async(dispatch_get_main_queue(), ^{
-            //                // Why are we dispatching this to the main queue?
-            //                // Because AVCaptureVideoPreviewLayer is the backing layer for AVCamPreviewView and UIView can only be manipulated on main thread.
-            //                // Note: As an exception to the above rule, it is not necessary to serialize video orientation changes on the AVCaptureVideoPreviewLayer’s connection with other session manipulation.
-            //
-            //                UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-            //                [[(AVCaptureVideoPreviewLayer *)[[self previewView] layer] connection] setVideoOrientation:(AVCaptureVideoOrientation)interfaceOrientation];
-            //            });
         }
-        
-        AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
-        if ([session canAddOutput:movieFileOutput]) {
-            [session addOutput:movieFileOutput];
-            AVCaptureConnection *connection = [movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
-            if ([connection isVideoStabilizationSupported]) {
-                if ([connection respondsToSelector:@selector(setPreferredVideoStabilizationMode:)]) {
-                    connection.preferredVideoStabilizationMode = AVCaptureVideoStabilizationModeStandard;
-                } else {
-                    [connection setEnablesVideoStabilizationWhenAvailable:YES];
-                }
-            }
-            [self setMovieFileOutput:movieFileOutput];
-        }
-        
-        AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
-        if ([session canAddOutput:stillImageOutput]) {
-            [stillImageOutput setOutputSettings:@{AVVideoCodecKey : AVVideoCodecJPEG}];
-            [session addOutput:stillImageOutput];
-            [self setStillImageOutput:stillImageOutput];
-        }
-        
+
         [session startRunning];
         
     });
