@@ -8,11 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
+@class DMPhotoThumbs;
+@protocol DMPhotoThumbsDelegate <NSObject>
+
+@optional
+- (void)dmPhotoThumbs:(DMPhotoThumbs*)view updateIemAtIndex:(NSInteger)index asCheck:(BOOL)check;
+
+@end
+
 @interface DMPhotoThumbs : UIView
+
+@property (weak, nonatomic) IBOutlet id<DMPhotoThumbsDelegate> delegate;
 
 @property (assign, nonatomic) UIEdgeInsets itemsInsets;
 @property (assign, nonatomic) CGFloat itemInterspacing;
 
 @property (assign, nonatomic) BOOL avaliablePreviewCell;
+
+- (NSInteger)countCheckedItems;
 
 @end

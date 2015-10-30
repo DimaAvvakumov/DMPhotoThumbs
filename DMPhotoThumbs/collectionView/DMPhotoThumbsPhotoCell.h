@@ -14,6 +14,10 @@
 
 @interface DMPhotoThumbsPhotoCell : UICollectionViewCell
 
+@property (copy, nonatomic) void (^checkedBlock)(BOOL checked);
+
 - (void) updateCellWithModel:(DMPhotoThumbsModel *)model;
+
+- (void) setCellChecked:(BOOL)checked;
 
 @end

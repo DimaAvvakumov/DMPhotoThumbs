@@ -21,6 +21,8 @@
 
 @property (assign, nonatomic) CGSize itemSize;
 
+@property (strong, nonatomic) NSMutableDictionary *selectedItems;
+
 @end
 
 @implementation DMPhotoThumbs
@@ -140,6 +142,8 @@
         
         NSLog(@"enumerate error: %@", error);
     }];
+    
+    self.selectedItems = [NSMutableDictionary dictionaryWithCapacity:10];
 }
 
 #pragma mark - Layout setup
@@ -153,6 +157,12 @@
 #pragma mark - Data items
 
 - (DMPhotoThumbsModel *)modelByIndexPath:(NSIndexPath *)indexPath {
+    NSInteger index = [self indexOfItemByIndexPath:indexPath];
+    
+    return [self.dataItems objectAtIndex:index];
+}
+
+- (NSInteger)indexOfItemByIndexPath:(NSIndexPath *)indexPath {
     NSInteger offset = 0;
     if (self.avaliablePreviewCell) {
         offset = -1;
@@ -160,7 +170,13 @@
     
     NSInteger index = indexPath.row + offset;
     
-    return [self.dataItems objectAtIndex:index];
+    return index;
+}
+
+- (NSString *)keyForItemByIndexPath:(NSIndexPath *)indexPath {
+    NSInteger index = [self indexOfItemByIndexPath:indexPath];
+    
+    return [NSString stringWithFormat:@"%ld", (long)index];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -196,10 +212,50 @@
     
     DMPhotoThumbsModel *model = [self modelByIndexPath:indexPath];
     
+    // weak self
+    __weak typeof (self) weakSelf = self;
+    
     DMPhotoThumbsPhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DMPhotoThumbsPhotoCell_ID forIndexPath:indexPath];
     [cell updateCellWithModel:model];
+    cell.checkedBlock = ^(BOOL checked) {
+        [weakSelf afterCheckedItem:checked atIndexPath:indexPath];
+        
+    };
+    
+    // selected state
+    NSString *key = [self keyForItemByIndexPath:indexPath];
+    BOOL checked = ([self.selectedItems objectForKey:key]) ? YES : NO;
+    [cell setCellChecked:checked];
     
     return cell;
+}
+
+- (void)afterCheckedItem:(BOOL)checked atIndexPath:(NSIndexPath *)indexPath {
+    NSInteger index = [self indexOfItemByIndexPath:indexPath];
+    
+    NSString *key = [self keyForItemByIndexPath:indexPath];
+    if (checked) {
+        [self.selectedItems setObject:key forKey:key];
+    } else {
+        [self.selectedItems removeObjectForKey:key];
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dmPhotoThumbs:updateIemAtIndex:asCheck:)]) {
+        [self.delegate dmPhotoThumbs:self updateIemAtIndex:index asCheck:checked];
+    }
+    
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"tap at index");
+}
+
+#pragma mark - Checked
+
+- (NSInteger)countCheckedItems {
+    if (self.selectedItems == nil) return 0;
+    
+    return [self.selectedItems count];
 }
 
 @end
