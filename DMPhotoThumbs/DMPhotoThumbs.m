@@ -21,7 +21,9 @@
 
 @property (assign, nonatomic) CGSize itemSize;
 
-@property (strong, nonatomic) NSMutableDictionary *selectedItems;
+@property (strong, nonatomic) NSMutableIndexSet *selectedItems;
+
+@property (strong, nonatomic) ALAssetsLibrary *assetLibrary;
 
 @end
 
@@ -62,6 +64,7 @@
     
     // first
     self.avaliablePreviewCell = YES;
+    self.selectedItems = [[NSMutableIndexSet alloc] init];
     
     // create collection view
     [self appendCollectionView];
@@ -128,11 +131,11 @@
         [group enumerateAssetsAtIndexes:indexSet options:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
             if (result == nil) return ;
             
-            DMPhotoThumbsModel *model = [[DMPhotoThumbsModel alloc] init];
-            UIImage *image = [UIImage imageWithCGImage: result.thumbnail];
-            model.image = image;
+//            DMPhotoThumbsModel *model = [[DMPhotoThumbsModel alloc] init];
+//            UIImage *image = [UIImage imageWithCGImage: result.thumbnail];
+//            model.image = image;
             
-            [items addObject:model];
+            [items addObject:result];
         }];
         
         self.dataItems = items;
@@ -143,7 +146,7 @@
         NSLog(@"enumerate error: %@", error);
     }];
     
-    self.selectedItems = [NSMutableDictionary dictionaryWithCapacity:10];
+    self.assetLibrary = library;
 }
 
 #pragma mark - Layout setup
@@ -156,7 +159,7 @@
 
 #pragma mark - Data items
 
-- (DMPhotoThumbsModel *)modelByIndexPath:(NSIndexPath *)indexPath {
+- (ALAsset *)modelByIndexPath:(NSIndexPath *)indexPath {
     NSInteger index = [self indexOfItemByIndexPath:indexPath];
     
     return [self.dataItems objectAtIndex:index];
@@ -210,7 +213,7 @@
         return cell;
     }
     
-    DMPhotoThumbsModel *model = [self modelByIndexPath:indexPath];
+    ALAsset *model = [self modelByIndexPath:indexPath];
     
     // weak self
     __weak typeof (self) weakSelf = self;
@@ -219,12 +222,11 @@
     [cell updateCellWithModel:model];
     cell.checkedBlock = ^(BOOL checked) {
         [weakSelf afterCheckedItem:checked atIndexPath:indexPath];
-        
     };
     
     // selected state
-    NSString *key = [self keyForItemByIndexPath:indexPath];
-    BOOL checked = ([self.selectedItems objectForKey:key]) ? YES : NO;
+    NSInteger index = [self indexOfItemByIndexPath:indexPath];
+    BOOL checked = [self.selectedItems containsIndex:index];
     [cell setCellChecked:checked];
     
     return cell;
@@ -233,11 +235,10 @@
 - (void)afterCheckedItem:(BOOL)checked atIndexPath:(NSIndexPath *)indexPath {
     NSInteger index = [self indexOfItemByIndexPath:indexPath];
     
-    NSString *key = [self keyForItemByIndexPath:indexPath];
     if (checked) {
-        [self.selectedItems setObject:key forKey:key];
+        [self.selectedItems addIndex:index];
     } else {
-        [self.selectedItems removeObjectForKey:key];
+        [self.selectedItems removeIndex:index];
     }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(dmPhotoThumbs:updateIemAtIndex:asCheck:)]) {
@@ -252,10 +253,28 @@
 
 #pragma mark - Checked
 
+- (NSUInteger) countOfItems {
+    if (self.dataItems == nil) return 0;
+    
+    return [self.dataItems count];
+}
+
+- (NSArray *) items {
+    if (self.dataItems == nil) return nil;
+    
+    return self.dataItems;
+}
+
 - (NSInteger)countCheckedItems {
     if (self.selectedItems == nil) return 0;
     
     return [self.selectedItems count];
+}
+
+- (NSIndexSet *) checkedItems {
+    if (self.selectedItems == nil) return nil;
+    
+    return self.selectedItems;
 }
 
 @end

@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-#import "DMPhotoThumbsModel.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 #define DMPhotoThumbsPhotoCell_ID @"DMPhotoThumbsPhotoCell_ID"
 
@@ -16,7 +15,7 @@
 
 @property (copy, nonatomic) void (^checkedBlock)(BOOL checked);
 
-- (void) updateCellWithModel:(DMPhotoThumbsModel *)model;
+- (void) updateCellWithModel:(ALAsset *)model;
 
 - (void) setCellChecked:(BOOL)checked;
 

@@ -22,8 +22,10 @@
     [self.selectButton setImage:self.checkOnImage forState:UIControlStateSelected];
 }
 
-- (void) updateCellWithModel:(DMPhotoThumbsModel *)model {
-    self.imageView.image = model.image;
+- (void) updateCellWithModel:(ALAsset *)model {
+    UIImage *image = [UIImage imageWithCGImage: model.thumbnail];
+    
+    self.imageView.image = image;
 }
 
 - (IBAction)selectAction:(UIButton*)sender {

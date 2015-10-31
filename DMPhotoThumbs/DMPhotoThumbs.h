@@ -25,6 +25,11 @@
 
 @property (assign, nonatomic) BOOL avaliablePreviewCell;
 
+// items
+- (NSUInteger) countOfItems;
+- (NSArray *) items;
+
+- (NSIndexSet *) checkedItems;
 - (NSInteger)countCheckedItems;
 
 @end

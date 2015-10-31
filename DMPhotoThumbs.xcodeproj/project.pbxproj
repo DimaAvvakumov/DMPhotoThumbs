@@ -14,7 +14,6 @@
 		186F98E91BB1351A00485D88 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F98E81BB1351A00485D88 /* main.m */; };
 		186F98EC1BB1352900485D88 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F98EB1BB1352900485D88 /* ViewController.m */; };
 		186F98F01BB135B400485D88 /* DMPhotoThumbs.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F98EF1BB135B400485D88 /* DMPhotoThumbs.m */; };
-		186F98F41BB13C2300485D88 /* DMPhotoThumbsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F98F31BB13C2300485D88 /* DMPhotoThumbsModel.m */; };
 		186F98F71BB13CC800485D88 /* DMPhotoThumbsPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F98F61BB13CC800485D88 /* DMPhotoThumbsPhotoCell.m */; };
 		186F98F91BB13CD500485D88 /* DMPhotoThumbsPhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 186F98F81BB13CD500485D88 /* DMPhotoThumbsPhotoCell.xib */; };
 		186F98FD1BB13F3000485D88 /* DMPhotoThumbsVizorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F98FB1BB13F3000485D88 /* DMPhotoThumbsVizorCell.m */; };
@@ -36,8 +35,6 @@
 		186F98ED1BB1353900485D88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		186F98EE1BB135B400485D88 /* DMPhotoThumbs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMPhotoThumbs.h; sourceTree = "<group>"; };
 		186F98EF1BB135B400485D88 /* DMPhotoThumbs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMPhotoThumbs.m; sourceTree = "<group>"; };
-		186F98F21BB13C2300485D88 /* DMPhotoThumbsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMPhotoThumbsModel.h; sourceTree = "<group>"; };
-		186F98F31BB13C2300485D88 /* DMPhotoThumbsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMPhotoThumbsModel.m; sourceTree = "<group>"; };
 		186F98F51BB13CC800485D88 /* DMPhotoThumbsPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMPhotoThumbsPhotoCell.h; sourceTree = "<group>"; };
 		186F98F61BB13CC800485D88 /* DMPhotoThumbsPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMPhotoThumbsPhotoCell.m; sourceTree = "<group>"; };
 		186F98F81BB13CD500485D88 /* DMPhotoThumbsPhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMPhotoThumbsPhotoCell.xib; sourceTree = "<group>"; };
@@ -109,8 +106,6 @@
 		186F98F11BB13C0400485D88 /* collectionView */ = {
 			isa = PBXGroup;
 			children = (
-				186F98F21BB13C2300485D88 /* DMPhotoThumbsModel.h */,
-				186F98F31BB13C2300485D88 /* DMPhotoThumbsModel.m */,
 				186F98F51BB13CC800485D88 /* DMPhotoThumbsPhotoCell.h */,
 				186F98F61BB13CC800485D88 /* DMPhotoThumbsPhotoCell.m */,
 				186F98F81BB13CD500485D88 /* DMPhotoThumbsPhotoCell.xib */,
@@ -193,7 +188,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				186F98F41BB13C2300485D88 /* DMPhotoThumbsModel.m in Sources */,
 				186F98FD1BB13F3000485D88 /* DMPhotoThumbsVizorCell.m in Sources */,
 				186F98F01BB135B400485D88 /* DMPhotoThumbs.m in Sources */,
 				186F98E11BB134EC00485D88 /* AppDelegate.m in Sources */,
