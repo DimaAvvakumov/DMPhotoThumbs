@@ -25,7 +25,10 @@
 
 @property (assign, nonatomic) BOOL avaliablePreviewCell;
 
-// items
+#pragma mark - Cell appereance
+- (void) setCheckImage:(UIImage *)image forState:(UIControlState)controlState;
+
+#pragma mark - Items data
 - (NSUInteger) countOfItems;
 - (NSArray *) items;
 

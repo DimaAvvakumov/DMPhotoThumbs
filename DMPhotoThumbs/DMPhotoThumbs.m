@@ -10,6 +10,8 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
+#import "DMPhotoThumbsStyleKit.h"
+
 #import "DMPhotoThumbsPhotoCell.h"
 #import "DMPhotoThumbsVizorCell.h"
 
@@ -24,6 +26,10 @@
 @property (strong, nonatomic) NSMutableIndexSet *selectedItems;
 
 @property (strong, nonatomic) ALAssetsLibrary *assetLibrary;
+
+// cell data
+@property (strong, nonatomic) UIImage *checkOnImage;
+@property (strong, nonatomic) UIImage *checkOffImage;
 
 @end
 
@@ -65,6 +71,10 @@
     // first
     self.avaliablePreviewCell = YES;
     self.selectedItems = [[NSMutableIndexSet alloc] init];
+    
+    // cell apereance
+    self.checkOnImage = [DMPhotoThumbsStyleKit imageOfCheckOnIcon];
+    self.checkOffImage = [DMPhotoThumbsStyleKit imageOfCheckOffIcon];
     
     // create collection view
     [self appendCollectionView];
@@ -220,6 +230,8 @@
     
     DMPhotoThumbsPhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DMPhotoThumbsPhotoCell_ID forIndexPath:indexPath];
     [cell updateCellWithModel:model];
+    [cell.selectButton setImage:self.checkOffImage forState:UIControlStateNormal];
+    [cell.selectButton setImage:self.checkOnImage forState:UIControlStateSelected];
     cell.checkedBlock = ^(BOOL checked) {
         [weakSelf afterCheckedItem:checked atIndexPath:indexPath];
     };
@@ -251,7 +263,18 @@
     NSLog(@"tap at index");
 }
 
-#pragma mark - Checked
+#pragma mark - Cell appereance
+
+- (void) setCheckImage:(UIImage *)image forState:(UIControlState)controlState {
+    if (controlState == UIControlStateNormal) {
+        self.checkOffImage = (image)?:[DMPhotoThumbsStyleKit imageOfCheckOffIcon];
+    }
+    if (controlState == UIControlStateSelected) {
+        self.checkOnImage = (image)?:[DMPhotoThumbsStyleKit imageOfCheckOnIcon];
+    }
+}
+
+#pragma mark - Items data
 
 - (NSUInteger) countOfItems {
     if (self.dataItems == nil) return 0;

@@ -19,6 +19,7 @@
 		186F98FD1BB13F3000485D88 /* DMPhotoThumbsVizorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 186F98FB1BB13F3000485D88 /* DMPhotoThumbsVizorCell.m */; };
 		186F98FE1BB13F3000485D88 /* DMPhotoThumbsVizorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 186F98FC1BB13F3000485D88 /* DMPhotoThumbsVizorCell.xib */; };
 		186F99001BB1470100485D88 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186F98FF1BB1470100485D88 /* AssetsLibrary.framework */; };
+		187753311BE72C4B006DBD0C /* DMPhotoThumbsStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 187753301BE72C4B006DBD0C /* DMPhotoThumbsStyleKit.m */; };
 		188C3EB61BB1641700B0A559 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 188C3EB51BB1641700B0A559 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,8 @@
 		186F98FB1BB13F3000485D88 /* DMPhotoThumbsVizorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMPhotoThumbsVizorCell.m; sourceTree = "<group>"; };
 		186F98FC1BB13F3000485D88 /* DMPhotoThumbsVizorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMPhotoThumbsVizorCell.xib; sourceTree = "<group>"; };
 		186F98FF1BB1470100485D88 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		1877532F1BE72C4B006DBD0C /* DMPhotoThumbsStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMPhotoThumbsStyleKit.h; sourceTree = "<group>"; };
+		187753301BE72C4B006DBD0C /* DMPhotoThumbsStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMPhotoThumbsStyleKit.m; sourceTree = "<group>"; };
 		188C3EB51BB1641700B0A559 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -83,6 +86,8 @@
 				186F98F11BB13C0400485D88 /* collectionView */,
 				186F98EE1BB135B400485D88 /* DMPhotoThumbs.h */,
 				186F98EF1BB135B400485D88 /* DMPhotoThumbs.m */,
+				1877532F1BE72C4B006DBD0C /* DMPhotoThumbsStyleKit.h */,
+				187753301BE72C4B006DBD0C /* DMPhotoThumbsStyleKit.m */,
 			);
 			path = DMPhotoThumbs;
 			sourceTree = "<group>";
@@ -189,6 +194,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				186F98FD1BB13F3000485D88 /* DMPhotoThumbsVizorCell.m in Sources */,
+				187753311BE72C4B006DBD0C /* DMPhotoThumbsStyleKit.m in Sources */,
 				186F98F01BB135B400485D88 /* DMPhotoThumbs.m in Sources */,
 				186F98E11BB134EC00485D88 /* AppDelegate.m in Sources */,
 				186F98F71BB13CC800485D88 /* DMPhotoThumbsPhotoCell.m in Sources */,

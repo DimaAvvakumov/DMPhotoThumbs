@@ -13,6 +13,10 @@
 
 @interface DMPhotoThumbsPhotoCell : UICollectionViewCell
 
+// outlets
+@property (weak, nonatomic) IBOutlet UIButton *selectButton;
+
+// action block
 @property (copy, nonatomic) void (^checkedBlock)(BOOL checked);
 
 - (void) updateCellWithModel:(ALAsset *)model;
