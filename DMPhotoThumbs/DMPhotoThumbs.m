@@ -85,6 +85,14 @@
     
 }
 
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+    if (newSuperview == nil) return;
+    
+    // data items
+    [self prepareDataItems];
+    [self.collectionView reloadData];
+}
+
 - (void)awakeFromNib {
     // data items
     [self prepareDataItems];
@@ -278,7 +286,11 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"tap at index");
+    NSInteger index = [self indexOfItemByIndexPath:indexPath];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(dmPhotoThumbs:tapItemAtIndex:)]) {
+        [self.delegate dmPhotoThumbs:self tapItemAtIndex:index];
+    }
 }
 
 #pragma mark - Cell appereance

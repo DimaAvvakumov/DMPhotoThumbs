@@ -14,8 +14,9 @@
 
 @interface ViewController () <DMPhotoThumbsDelegate, DMPhotoThumbsDataSource>
 
-@property (weak, nonatomic) IBOutlet UILabel *captionLabel;
 @property (weak, nonatomic) IBOutlet DMPhotoThumbs *photoThumbs;
+@property (weak, nonatomic) IBOutlet UILabel *captionLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @end
 
@@ -46,11 +47,19 @@
 #pragma mark - DMPhotoThumbsDelegate, DMPhotoThumbsDataSource
 
 - (ALAssetsLibrary*)assetLibraryForDMPhotoThumbs:(DMPhotoThumbs *)view {
-    return [[ALAssetsLibrary alloc] init];
+    return nil;
+  //  return [[ALAssetsLibrary alloc] init];
 }
 
 - (void)dmPhotoThumbs:(DMPhotoThumbs *)view updateIemAtIndex:(NSInteger)index asCheck:(BOOL)check {
     [self updateCaption];
+}
+
+- (void)dmPhotoThumbs:(DMPhotoThumbs *)view tapItemAtIndex:(NSInteger)index {
+    ALAsset *asset = [view.items objectAtIndex:index];
+    CGImageRef origCGImage = [[asset defaultRepresentation] fullResolutionImage];
+
+    self.imageView.image = [UIImage imageWithCGImage: origCGImage];
 }
 
 @end

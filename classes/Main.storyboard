@@ -36,19 +36,28 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="A9R-1p-TZP">
+                                <rect key="frame" x="16" y="165" width="568" height="419"/>
+                                <animations/>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XYR-xs-QDA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="6hJ-Ek-6dZ"/>
                             <constraint firstItem="XYR-xs-QDA" firstAttribute="top" secondItem="yo3-FV-xz1" secondAttribute="bottom" constant="12" id="JoO-jP-5oS"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="A9R-1p-TZP" secondAttribute="bottom" constant="16" id="Onl-3v-q5K"/>
                             <constraint firstItem="yo3-FV-xz1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Sn0-cY-qWc"/>
+                            <constraint firstAttribute="trailing" secondItem="A9R-1p-TZP" secondAttribute="trailing" constant="16" id="aX0-YV-4tf"/>
+                            <constraint firstItem="A9R-1p-TZP" firstAttribute="top" secondItem="XYR-xs-QDA" secondAttribute="bottom" constant="12" id="apQ-bc-B9D"/>
+                            <constraint firstItem="A9R-1p-TZP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="fbu-gI-rzC"/>
                             <constraint firstAttribute="trailing" secondItem="yo3-FV-xz1" secondAttribute="trailing" id="qO9-V2-ep0"/>
                             <constraint firstItem="yo3-FV-xz1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="rcL-tB-O9f"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="captionLabel" destination="XYR-xs-QDA" id="yRO-8Y-22G"/>
+                        <outlet property="imageView" destination="A9R-1p-TZP" id="L8C-n5-K70"/>
                         <outlet property="photoThumbs" destination="yo3-FV-xz1" id="yro-fe-CUZ"/>
                     </connections>
                 </viewController>

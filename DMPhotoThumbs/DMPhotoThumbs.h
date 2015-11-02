@@ -21,6 +21,7 @@
 
 @optional
 - (void)dmPhotoThumbs:(DMPhotoThumbs*)view updateIemAtIndex:(NSInteger)index asCheck:(BOOL)check;
+- (void)dmPhotoThumbs:(DMPhotoThumbs*)view tapItemAtIndex:(NSInteger)index;
 
 @end
 
