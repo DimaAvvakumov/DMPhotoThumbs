@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class DMPhotoThumbs;
+@class DMPhotoThumbs, ALAssetsLibrary;
+
+@protocol DMPhotoThumbsDataSource <NSObject>
+
+@optional
+- (ALAssetsLibrary *)assetLibraryForDMPhotoThumbs:(DMPhotoThumbs*)view;
+
+@end
+
 @protocol DMPhotoThumbsDelegate <NSObject>
 
 @optional
@@ -18,6 +26,7 @@
 
 @interface DMPhotoThumbs : UIView
 
+@property (weak, nonatomic) IBOutlet id<DMPhotoThumbsDataSource> dataSource;
 @property (weak, nonatomic) IBOutlet id<DMPhotoThumbsDelegate> delegate;
 
 @property (assign, nonatomic) UIEdgeInsets itemsInsets;

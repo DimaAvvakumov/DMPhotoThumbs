@@ -83,6 +83,9 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"DMPhotoThumbsPhotoCell" bundle:nil] forCellWithReuseIdentifier:DMPhotoThumbsPhotoCell_ID];
     [self.collectionView registerNib:[UINib nibWithNibName:@"DMPhotoThumbsVizorCell" bundle:nil] forCellWithReuseIdentifier:DMPhotoThumbsVizorCell_ID];
     
+}
+
+- (void)awakeFromNib {
     // data items
     [self prepareDataItems];
     [self.collectionView reloadData];
@@ -121,8 +124,24 @@
 #pragma mark - Data items
 
 - (void)prepareDataItems {
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    ALAssetsLibrary *library = nil;
     
+    // ask data source for library
+    if (self.dataSource && [self.dataSource respondsToSelector:@selector(assetLibraryForDMPhotoThumbs:)]) {
+        library = [self.dataSource assetLibraryForDMPhotoThumbs:self];
+    }
+    
+    // check library for nil and if nil create one
+    if (library == nil) {
+        library = [[ALAssetsLibrary alloc] init];
+    }
+    
+    // store library for future asset parsing
+    // without this asset always return failure
+    self.assetLibrary = library;
+    
+    // iterate by library for parsing groups
+    // we are interests for one group - "saved photos"
     [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
         if (group == nil) return ;
         
@@ -156,7 +175,6 @@
         NSLog(@"enumerate error: %@", error);
     }];
     
-    self.assetLibrary = library;
 }
 
 #pragma mark - Layout setup

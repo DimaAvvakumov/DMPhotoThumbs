@@ -8,9 +8,11 @@
 
 #import "ViewController.h"
 
+#import <AssetsLibrary/AssetsLibrary.h>
+
 #import "DMPhotoThumbs.h"
 
-@interface ViewController () <DMPhotoThumbsDelegate>
+@interface ViewController () <DMPhotoThumbsDelegate, DMPhotoThumbsDataSource>
 
 @property (weak, nonatomic) IBOutlet UILabel *captionLabel;
 @property (weak, nonatomic) IBOutlet DMPhotoThumbs *photoThumbs;
@@ -41,7 +43,11 @@
     }
 }
 
-#pragma mark - DMPhotoThumbsDelegate
+#pragma mark - DMPhotoThumbsDelegate, DMPhotoThumbsDataSource
+
+- (ALAssetsLibrary*)assetLibraryForDMPhotoThumbs:(DMPhotoThumbs *)view {
+    return [[ALAssetsLibrary alloc] init];
+}
 
 - (void)dmPhotoThumbs:(DMPhotoThumbs *)view updateIemAtIndex:(NSInteger)index asCheck:(BOOL)check {
     [self updateCaption];

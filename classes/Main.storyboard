@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <scenes>
-        <!--Delegate-->
+        <!--Data Source-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
@@ -25,6 +25,7 @@
                                     <constraint firstAttribute="height" constant="100" id="U3a-sL-IPZ"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="iry-k1-6zn"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="dWE-xs-GGB"/>
                                 </connections>
                             </view>
