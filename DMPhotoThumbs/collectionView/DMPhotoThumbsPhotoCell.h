@@ -13,6 +13,9 @@
 
 @interface DMPhotoThumbsPhotoCell : UICollectionViewCell
 
+// photo index
+@property (assign, nonatomic) NSInteger photoIndex;
+
 // outlets
 @property (weak, nonatomic) IBOutlet UIButton *selectButton;
 

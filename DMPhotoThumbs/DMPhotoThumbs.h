@@ -43,6 +43,7 @@
 - (NSArray *) items;
 
 - (NSIndexSet *) checkedItems;
+- (void)setCheckedItems:(NSIndexSet *)indexSet;
 - (NSInteger)countCheckedItems;
 
 @end

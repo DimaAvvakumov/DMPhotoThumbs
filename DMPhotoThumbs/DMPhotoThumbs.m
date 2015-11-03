@@ -148,6 +148,9 @@
     // without this asset always return failure
     self.assetLibrary = library;
     
+    // register notifications
+    // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(libraryChanged:) name:ALAssetsLibraryChangedNotification object:library];
+    
     // iterate by library for parsing groups
     // we are interests for one group - "saved photos"
     [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
@@ -183,6 +186,10 @@
         NSLog(@"enumerate error: %@", error);
     }];
     
+}
+
+- (void)libraryChanged:(NSNotification *)notification {
+    NSLog(@"not: %@", notification);
 }
 
 #pragma mark - Layout setup
@@ -249,6 +256,7 @@
         return cell;
     }
     
+    NSInteger index = [self indexOfItemByIndexPath:indexPath];
     ALAsset *model = [self modelByIndexPath:indexPath];
     
     // weak self
@@ -256,6 +264,7 @@
     
     DMPhotoThumbsPhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DMPhotoThumbsPhotoCell_ID forIndexPath:indexPath];
     [cell updateCellWithModel:model];
+    cell.photoIndex = index;
     [cell.selectButton setImage:self.checkOffImage forState:UIControlStateNormal];
     [cell.selectButton setImage:self.checkOnImage forState:UIControlStateSelected];
     cell.checkedBlock = ^(BOOL checked) {
@@ -263,7 +272,6 @@
     };
     
     // selected state
-    NSInteger index = [self indexOfItemByIndexPath:indexPath];
     BOOL checked = [self.selectedItems containsIndex:index];
     [cell setCellChecked:checked];
     
@@ -315,7 +323,7 @@
 - (NSArray *) items {
     if (self.dataItems == nil) return nil;
     
-    return self.dataItems;
+    return [self.dataItems copy];
 }
 
 - (NSInteger)countCheckedItems {
@@ -324,10 +332,25 @@
     return [self.selectedItems count];
 }
 
-- (NSIndexSet *) checkedItems {
+- (NSIndexSet *)checkedItems {
     if (self.selectedItems == nil) return nil;
     
-    return self.selectedItems;
+    return [self.selectedItems copy];
+}
+
+- (void)setCheckedItems:(NSIndexSet *)indexSet {
+    self.selectedItems = [indexSet mutableCopy];
+    
+    // update visible cells
+    NSArray *cells = [self.collectionView visibleCells];
+    for (DMPhotoThumbsPhotoCell *cell in cells) {
+        if (NO == [cell isKindOfClass:[DMPhotoThumbsPhotoCell class]]) continue;
+        
+        NSInteger index = cell.photoIndex;
+        BOOL checked = [indexSet containsIndex:index];
+        [cell setCellChecked:checked];
+    }
+    
 }
 
 @end
