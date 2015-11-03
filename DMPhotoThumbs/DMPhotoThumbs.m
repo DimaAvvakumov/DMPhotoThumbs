@@ -350,7 +350,12 @@
         BOOL checked = [indexSet containsIndex:index];
         [cell setCellChecked:checked];
     }
+}
+
+- (void)clearCheckedItems {
+    NSIndexSet *indexSet = [[NSIndexSet alloc] init];
     
+    [self setCheckedItems:indexSet];
 }
 
 @end

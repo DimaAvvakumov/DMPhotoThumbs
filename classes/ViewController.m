@@ -44,6 +44,12 @@
     }
 }
 
+- (IBAction)clearAction:(UIButton *)sender {
+    [self.photoThumbs clearCheckedItems];
+    
+    [self updateCaption];
+}
+
 #pragma mark - DMPhotoThumbsDelegate, DMPhotoThumbsDataSource
 
 - (ALAssetsLibrary*)assetLibraryForDMPhotoThumbs:(DMPhotoThumbs *)view {

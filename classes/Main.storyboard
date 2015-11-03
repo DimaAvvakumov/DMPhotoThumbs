@@ -36,6 +36,20 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jkX-Tg-K57" userLabel="Button - Clear">
+                                <rect key="frame" x="541" y="128" width="43" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="GRP-GM-Zc6"/>
+                                </constraints>
+                                <state key="normal" title="Clear">
+                                    <color key="titleColor" red="0.14901960780000001" green="0.70588235290000001" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clearAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ek4-TA-pNX"/>
+                                </connections>
+                            </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="A9R-1p-TZP">
                                 <rect key="frame" x="16" y="165" width="568" height="419"/>
                                 <animations/>
@@ -48,9 +62,12 @@
                             <constraint firstItem="XYR-xs-QDA" firstAttribute="top" secondItem="yo3-FV-xz1" secondAttribute="bottom" constant="12" id="JoO-jP-5oS"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="A9R-1p-TZP" secondAttribute="bottom" constant="16" id="Onl-3v-q5K"/>
                             <constraint firstItem="yo3-FV-xz1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Sn0-cY-qWc"/>
+                            <constraint firstAttribute="trailing" secondItem="jkX-Tg-K57" secondAttribute="trailing" constant="16" id="Wj2-eU-bZr"/>
                             <constraint firstAttribute="trailing" secondItem="A9R-1p-TZP" secondAttribute="trailing" constant="16" id="aX0-YV-4tf"/>
                             <constraint firstItem="A9R-1p-TZP" firstAttribute="top" secondItem="XYR-xs-QDA" secondAttribute="bottom" constant="12" id="apQ-bc-B9D"/>
                             <constraint firstItem="A9R-1p-TZP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="fbu-gI-rzC"/>
+                            <constraint firstItem="jkX-Tg-K57" firstAttribute="top" secondItem="yo3-FV-xz1" secondAttribute="bottom" constant="8" id="hAH-qL-5t6"/>
+                            <constraint firstItem="jkX-Tg-K57" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XYR-xs-QDA" secondAttribute="trailing" constant="8" id="hQP-fT-ajt"/>
                             <constraint firstAttribute="trailing" secondItem="yo3-FV-xz1" secondAttribute="trailing" id="qO9-V2-ep0"/>
                             <constraint firstItem="yo3-FV-xz1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="rcL-tB-O9f"/>
                         </constraints>
