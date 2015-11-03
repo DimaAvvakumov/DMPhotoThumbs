@@ -296,6 +296,13 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger index = [self indexOfItemByIndexPath:indexPath];
     
+    if (index == -1) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(dmPhotoThumbsOpenCamera:)]) {
+            [self.delegate dmPhotoThumbsOpenCamera:self];
+        }
+        
+        return;
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(dmPhotoThumbs:tapItemAtIndex:)]) {
         [self.delegate dmPhotoThumbs:self tapItemAtIndex:index];
     }
