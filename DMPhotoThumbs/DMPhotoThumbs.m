@@ -151,11 +151,22 @@
     // register notifications
     // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(libraryChanged:) name:ALAssetsLibraryChangedNotification object:library];
     
+    // filter
+    ALAssetsFilter *filter = nil;
+    if (_delegate && [_delegate respondsToSelector:@selector(dmPhotoThumbsAssetFilter:)]) {
+        filter = [self.delegate dmPhotoThumbsAssetFilter:self];
+    }
+    
     // iterate by library for parsing groups
     // we are interests for one group - "saved photos"
     [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
         if (group == nil) return ;
         
+        // apply filter
+        if (filter) {
+            [group setAssetsFilter:filter];
+        }
+
         NSInteger maxCount = 100;
         NSInteger numberOfAssets = group.numberOfAssets;
         NSInteger startOffset = 0;

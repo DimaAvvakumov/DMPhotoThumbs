@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class DMPhotoThumbs, ALAssetsLibrary;
+@class DMPhotoThumbs, ALAssetsLibrary, ALAssetsFilter;
 
 @protocol DMPhotoThumbsDataSource <NSObject>
 
@@ -22,6 +22,7 @@
 @optional
 - (void)dmPhotoThumbs:(DMPhotoThumbs*)view updateIemAtIndex:(NSInteger)index asCheck:(BOOL)check;
 - (void)dmPhotoThumbs:(DMPhotoThumbs*)view tapItemAtIndex:(NSInteger)index;
+- (ALAssetsFilter *)dmPhotoThumbsAssetFilter:(DMPhotoThumbs*)view;
 
 - (void)dmPhotoThumbsOpenCamera:(DMPhotoThumbs*)view;
 

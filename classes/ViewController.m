@@ -57,6 +57,10 @@
   //  return [[ALAssetsLibrary alloc] init];
 }
 
+- (ALAssetsFilter *)dmPhotoThumbsAssetFilter:(DMPhotoThumbs *)view {
+    return [ALAssetsFilter allPhotos];
+}
+
 - (void)dmPhotoThumbs:(DMPhotoThumbs *)view updateIemAtIndex:(NSInteger)index asCheck:(BOOL)check {
     [self updateCaption];
 }
