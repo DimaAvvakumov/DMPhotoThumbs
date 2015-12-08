@@ -12,4 +12,7 @@
 
 @interface DMPhotoThumbsVizorCell : UICollectionViewCell
 
+- (void)startCapture;
+- (void)stopCapture;
+
 @end

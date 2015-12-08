@@ -51,4 +51,8 @@
 - (void)setCheckedItems:(NSIndexSet *)indexSet;
 - (void)clearCheckedItems;
 
+#pragma mark - Prepare methods
+- (void)prepareForShowing;
+- (void)prepareForHidding;
+
 @end

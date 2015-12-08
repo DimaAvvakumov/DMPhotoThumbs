@@ -50,6 +50,14 @@
     [self updateCaption];
 }
 
+- (IBAction)startCaptureAction:(UIButton *)sender {
+    [self.photoThumbs prepareForShowing];
+}
+
+- (IBAction)stopCaptureAction:(UIButton *)sender {
+    [self.photoThumbs prepareForHidding];
+}
+
 #pragma mark - DMPhotoThumbsDelegate, DMPhotoThumbsDataSource
 
 - (ALAssetsLibrary*)assetLibraryForDMPhotoThumbs:(DMPhotoThumbs *)view {

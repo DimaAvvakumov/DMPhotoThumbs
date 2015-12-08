@@ -31,6 +31,8 @@
 @property (strong, nonatomic) UIImage *checkOnImage;
 @property (strong, nonatomic) UIImage *checkOffImage;
 
+@property (weak, nonatomic) DMPhotoThumbsVizorCell *vizorCell;
+
 @end
 
 @implementation DMPhotoThumbs
@@ -264,6 +266,9 @@
     if (self.avaliablePreviewCell && indexPath.row == 0) {
         DMPhotoThumbsVizorCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DMPhotoThumbsVizorCell_ID forIndexPath:indexPath];
         
+        // store cell
+        self.vizorCell = cell;
+        
         return cell;
     }
     
@@ -374,6 +379,20 @@
     NSIndexSet *indexSet = [[NSIndexSet alloc] init];
     
     [self setCheckedItems:indexSet];
+}
+
+#pragma mark - Prepare methods
+
+- (void)prepareForShowing {
+    if (self.vizorCell) {
+        [self.vizorCell startCapture];
+    }
+}
+
+- (void)prepareForHidding {
+    if (self.vizorCell) {
+        [self.vizorCell stopCapture];
+    }
 }
 
 @end

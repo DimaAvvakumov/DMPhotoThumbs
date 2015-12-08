@@ -111,5 +111,19 @@
     }];
 }
 
+#pragma mark - Public methods
+
+- (void)startCapture {
+    if (self.captureSession) {
+        [self.captureSession startRunning];
+    }
+}
+
+- (void)stopCapture {
+    if (self.captureSession) {
+        [self.captureSession stopRunning];
+    }
+}
+
 
 @end
