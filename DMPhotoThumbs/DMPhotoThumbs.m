@@ -197,6 +197,11 @@
     } failureBlock:^(NSError *error) {
         
         NSLog(@"enumerate error: %@", error);
+        
+        if (_delegate && [_delegate respondsToSelector:@selector(dmPhotoThumbs:fetchError:)]) {
+            [_delegate dmPhotoThumbs:self fetchError:error];
+        }
+        
     }];
     
 }

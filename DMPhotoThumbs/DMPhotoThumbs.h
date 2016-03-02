@@ -22,6 +22,7 @@
 @optional
 - (void)dmPhotoThumbs:(DMPhotoThumbs*)view updateIemAtIndex:(NSInteger)index asCheck:(BOOL)check;
 - (void)dmPhotoThumbs:(DMPhotoThumbs*)view tapItemAtIndex:(NSInteger)index;
+- (void)dmPhotoThumbs:(DMPhotoThumbs*)view fetchError:(NSError *)error;
 - (ALAssetsFilter *)dmPhotoThumbsAssetFilter:(DMPhotoThumbs*)view;
 
 - (void)dmPhotoThumbsOpenCamera:(DMPhotoThumbs*)view;
