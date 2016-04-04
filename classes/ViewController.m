@@ -24,12 +24,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+//    
+//    UIImage *image = [DMPhotoThumbsStyleKit imageOfCheckOnIcon];
+//    [_photoThumbs setPickPhotoIcon:image];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Caption

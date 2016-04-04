@@ -12,6 +12,8 @@
 
 @interface DMPhotoThumbsVizorCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *pickImageView;
+
 - (void)startCapture;
 - (void)stopCapture;
 

@@ -41,6 +41,7 @@
 
 #pragma mark - Cell appereance
 - (void) setCheckImage:(UIImage *)image forState:(UIControlState)controlState;
+- (void) setPickPhotoIcon:(UIImage *)image;
 
 #pragma mark - Items data
 - (NSUInteger) countOfItems;

@@ -31,6 +31,8 @@
 @property (strong, nonatomic) UIImage *checkOnImage;
 @property (strong, nonatomic) UIImage *checkOffImage;
 
+@property (strong, nonatomic) UIImage *pickPhotoIconImage;
+
 @property (weak, nonatomic) DMPhotoThumbsVizorCell *vizorCell;
 
 @end
@@ -274,6 +276,9 @@
         // store cell
         self.vizorCell = cell;
         
+        // photo image
+        cell.pickImageView.image = self.pickPhotoIconImage;
+        
         return cell;
     }
     
@@ -338,6 +343,10 @@
     if (controlState == UIControlStateSelected) {
         self.checkOnImage = (image)?:[DMPhotoThumbsStyleKit imageOfCheckOnIcon];
     }
+}
+
+- (void) setPickPhotoIcon:(UIImage *)image {
+    self.pickPhotoIconImage = image;
 }
 
 #pragma mark - Items data
