@@ -33,6 +33,8 @@
 
 @property (strong, nonatomic) UIImage *pickPhotoIconImage;
 
+@property (assign, nonatomic) BOOL multipleSelectEnabledValue;
+
 @property (weak, nonatomic) DMPhotoThumbsVizorCell *vizorCell;
 
 @end
@@ -79,6 +81,8 @@
     // cell apereance
     self.checkOnImage = [DMPhotoThumbsStyleKit imageOfCheckOnIcon];
     self.checkOffImage = [DMPhotoThumbsStyleKit imageOfCheckOffIcon];
+    
+    self.multipleSelectEnabledValue = YES;
     
     // create collection view
     [self appendCollectionView];
@@ -291,6 +295,7 @@
     DMPhotoThumbsPhotoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DMPhotoThumbsPhotoCell_ID forIndexPath:indexPath];
     [cell updateCellWithModel:model];
     cell.photoIndex = index;
+    [cell.selectButton setHidden:!self.multipleSelectEnabledValue];
     [cell.selectButton setImage:self.checkOffImage forState:UIControlStateNormal];
     [cell.selectButton setImage:self.checkOnImage forState:UIControlStateSelected];
     cell.checkedBlock = ^(BOOL checked) {
@@ -347,6 +352,10 @@
 
 - (void) setPickPhotoIcon:(UIImage *)image {
     self.pickPhotoIconImage = image;
+}
+
+- (void) setMultipleSelectEnabled:(BOOL) multipleSelectEnabled {
+    self.multipleSelectEnabledValue = multipleSelectEnabled;
 }
 
 #pragma mark - Items data
